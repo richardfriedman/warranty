@@ -422,7 +422,7 @@ if [[ -e "${WarrantyTempFile}" && -z "${InvalidSerial}" ]] ; then
 		# Changing WarrantyExpires date based on OS. Added by roljui (see GitHub Issue #4)
 		OSVersion=$(uname -a)
 		if $( echo $OSVersion | grep --quiet 'Darwin' ); then
-			WarrantyExpires=$(GetWarrantyExp|/bin/date -jf "%B %d, %Y" "${WarrantyExpires}" +"%Y-%m-%d") > /dev/null 2>&1 ## corrects Apple's change to "Month Day, Year" format for HW_END_DATE
+			WarrantyExpires=$(GetWarrantyExp | LC_ALL=C /bin/date -jf "%B %d, %Y" "${WarrantyExpires}" +"%Y-%m-%d") > /dev/null 2>&1 ## corrects Apple's change to "Month Day, Year" format for HW_END_DATE
 		else
 			WarrantyExpires=$(GetWarrantyExp|/bin/date -d "${WarrantyExpires}" +"%Y-%m-%d") > /dev/null 2>&1 ## corrects Apple's change to "Month Day, Year" format for HW_END_DATE (Linux Compliant)
 		fi
